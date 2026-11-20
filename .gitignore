@@ -2,7 +2,7 @@
 .DS_Store
 
 # Windows
-Thumbs.db
+#Thumbs.db
 Desktop.ini
 
 # Editor swap and project files
