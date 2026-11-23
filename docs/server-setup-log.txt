@@ -1,0 +1,33 @@
+Created 22/11/2026 by Lukas Vogelmann-Lyon
+
+Usergroups:
+- engineering
+- marketing
+- operations
+- admins
+
+Users (Groups):
+- Alice (Engineering)
+- Bob (Engineering)
+- Carol (Engineering)
+- Dave (Engineering)
+- Emma (Marketing)
+- Frank (Marketing)
+- Grace (Marketing)
+- Henry (Operatopms)
+- Iris (Operations)
+- Jack (Operations)
+- Kate (Operations, Admins)
+- Leo (Operations, Admins)
+
+
+Tree:
+
+/shared/
+|-- engineering/        root    engineering     770
+|-- marketing/          root    marketing       770
+|-- operations/         root    operations      770
+|-- company-docs        root    admins          775
+
+/logs/
+|-- reports/            root    admins          775
