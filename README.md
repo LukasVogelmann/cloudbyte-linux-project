@@ -35,12 +35,7 @@ Built the core of the server: four groups (`engineering`, `marketing`,
 
 `verify-foundations.sh` checks the groups, users, directories and setup
 log in one go. Run it on the VM with:
-
-    # Track 1 (Vagrant): repo is mounted at /vagrant
     bash /vagrant/verify-foundations.sh
-
-    # Track 2 (Lima): repo is mounted at /host inside the VM
-    bash /host/verify-foundations.sh
 
 ## Section 2: File Management and Permissions
 
@@ -61,9 +56,30 @@ A permissions test report records what was attempted and what happened.
 
 `verify-permissions.sh` checks the team folders, the dropbox, the sample
 files, and setgid propagation. Run it on the VM with:
-
-    # Track 1 (Vagrant): repo is mounted at /vagrant
     bash /vagrant/verify-permissions.sh
 
-    # Track 2 (Lima): repo is mounted at /host inside the VM
-    bash /host/verify-permissions.sh
+
+## Section 3: User Onboarding Automation
+
+Replaced Section 1's manual user-creation work with a single script,
+`scripts/onboard-user.sh`, that takes either an interactive prompt or a
+CSV of new hires. Strict mode catches failures early, a `create_user`
+function carries the four mutating commands, and `--dry-run` lets the
+script be exercised without touching real accounts.
+
+### Script flags
+
+| Flag             | Purpose                                                   |
+|------------------|-----------------------------------------------------------|
+| `--csv PATH`     | Read users from a CSV (`username,group,fullname`)         |
+| `--dry-run`      | Print intended actions without creating anything          |
+| `-h`, `--help`   | Print the Usage block from the script header              |
+
+A sample CSV ships at `data/new-hires.csv` for repeat runs and
+idempotency checks.
+
+### Verification
+
+`verify-onboarding.sh` walks the script and the CSV end-to-end and
+prints a ✅ or ❌ for each requirement. Run it on the VM with:
+    bash /vagrant/verify-onboarding.sh
