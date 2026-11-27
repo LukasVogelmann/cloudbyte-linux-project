@@ -83,3 +83,27 @@ idempotency checks.
 `verify-onboarding.sh` walks the script and the CSV end-to-end and
 prints a ✅ or ❌ for each requirement. Run it on the VM with:
     bash /vagrant/verify-onboarding.sh
+
+## Section 4: Backup Automation
+
+Built two scheduled scripts to keep the team folders backed up.
+`scripts/backup-shared.sh` archives the whole `/shared` tree (excluding the
+backup directory itself) into a date-stamped `.tar.gz` under
+`/shared/backups`, with a `trap` that removes a partial archive if the
+script is interrupted mid-run. `scripts/cleanup-backups.sh` prunes archives
+older than seven days, with a `--preview` flag that lists what would go
+without deleting anything. Root cron drives both.
+
+### Schedule
+
+| Script                       | Schedule    | Log file                         |
+|------------------------------|-------------|----------------------------------|
+| `scripts/backup-shared.sh`   | `0 2 * * *` | `/var/log/cloudbyte-backup.log`  |
+| `scripts/clean-backups.sh` | `0 3 * * 0` | `/var/log/cloudbyte-cleanup.log` |
+
+### Verification
+
+`verify-backup.sh` walks the backup directory, both scripts, and the
+crontab in one go and prints a ✅ or ❌ for each requirement. Run it on
+the VM with:
+    bash /vagrant/verify-backup.sh
